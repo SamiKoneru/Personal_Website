@@ -31,7 +31,7 @@ export const categoryColor: Record<ProjectCategory, string> = {
 export const projects: Project[] = [
   {
     slug: "custom-digit-classifier",
-    name: "Custom Digit Classifier",
+    name: "CUDA CNN",
     category: "Machine Learning",
     description:
       "CNN built from scratch in C++/CUDA with hand-written backprop, im2col, and GEMM kernels. 99%+ on MNIST at ~10% the throughput of an equivalent PyTorch/cuDNN model on T4 GPUs.",
@@ -48,16 +48,8 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    slug: "trans-scratch",
-    name: "Transformer from scratch",
-    category: "Machine Learning",
-    description:
-      "A transformer built in pure NumPy — no autograd, manual backprop through attention and FFN blocks.",
-    stack: ["NumPy", "Python"],
-  },
-  {
     slug: "cnn-scratch",
-    name: "CNN from scratch",
+    name: "NumPy CNN",
     category: "Machine Learning",
     description:
       "Convolutional neural net implemented from scratch in NumPy, including manual conv and pool gradients.",
@@ -72,32 +64,11 @@ export const projects: Project[] = [
     stack: ["PyTorch", "MRI"],
   },
   {
-    slug: "ai-image-detector",
-    name: "AI Image Detector",
-    category: "Machine Learning",
-    description: "CNN for classifying AI-generated vs. real images.",
-    stack: ["PyTorch"],
-  },
-  {
-    slug: "proteins",
-    name: "Protein Function Prediction",
-    category: "Machine Learning",
-    description: "CAFA-6 protein function prediction pipeline.",
-    stack: ["Python", "Bio"],
-  },
-  {
     slug: "recommender",
     name: "Book Recommender",
     category: "Machine Learning",
     description: "Collaborative-filtering book recommendation system.",
     stack: ["Python"],
-  },
-  {
-    slug: "titanic",
-    name: "Titanic ML",
-    category: "Machine Learning",
-    description: "Classic Kaggle Titanic notebook — feature work and modeling.",
-    stack: ["Python", "Jupyter"],
   },
   {
     slug: "catan-bot",
@@ -156,7 +127,7 @@ export const projects: Project[] = [
   },
   {
     slug: "cf-ai-project-planner",
-    name: "Project Planner (Cloudflare)",
+    name: "Project Planner",
     category: "Web Apps",
     description:
       "AI project planner on Cloudflare — Durable Objects for state, Workers AI for the LLM, React + WebSocket frontend.",
@@ -168,14 +139,6 @@ export const projects: Project[] = [
     category: "Web Apps",
     description:
       "Flask file hosting service with public/private visibility, CSRF, and session auth.",
-    stack: ["Flask", "SQLite"],
-  },
-  {
-    slug: "startup-project",
-    name: "Secure File Storage",
-    category: "Web Apps",
-    description:
-      "Flask web app for secure file storage with auth and hashed passwords.",
     stack: ["Flask", "SQLite"],
   },
 ];
