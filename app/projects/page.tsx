@@ -10,7 +10,7 @@ export default function ProjectsPage() {
   return (
     <main className="space-y-20 md:space-y-24">
       <header className="space-y-5 animate-fade-in-up">
-        <h1 className="gradient-text text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl">
+        <h1 className="gradient-text pb-2 text-5xl font-semibold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl">
           Projects
         </h1>
         <div className="accent-bar" />
