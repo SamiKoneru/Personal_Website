@@ -128,7 +128,7 @@ export default function Home() {
                 <Reveal key={c.label} delay={i * 100}>
                   <li className="flex items-baseline gap-4">
                     <span
-                      className="inline-block w-24 flex-shrink-0 text-xs font-semibold uppercase tracking-[0.15em]"
+                      className="inline-block w-32 flex-shrink-0 text-xs font-semibold uppercase tracking-[0.15em]"
                       style={{
                         background:
                           "linear-gradient(135deg, var(--accent), var(--accent-2))",

@@ -139,7 +139,7 @@ export const profile = {
     { label: "Building", value: "End-to-end Rust features at DreamIt" },
     {
       label: "Researching",
-      value: "Low-resource language models with ByT5 at TokenWorks",
+      value: "Persistent memory in neural world models",
     },
     { label: "Writing", value: "GPU kernels in C++/CUDA on the side" },
   ] satisfies CurrentlyItem[],
