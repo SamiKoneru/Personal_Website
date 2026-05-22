@@ -7,6 +7,7 @@ import { NeuralVisual } from "@/components/NeuralVisual";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
 import { ExperienceItem } from "@/components/Experience";
+import { SkillsMarquee } from "@/components/SkillsMarquee";
 import { EducationCard } from "@/components/EducationCard";
 
 export default function Home() {
@@ -58,15 +59,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap gap-2.5">
-          {profile.skills.map((s) => (
-            <span
-              key={s}
-              className="skill-tag cursor-default rounded-md border border-[color:var(--border)] bg-[color:var(--background)]/40 px-3 py-1.5 text-sm backdrop-blur-sm"
-            >
-              {s}
-            </span>
-          ))}
+        <div className="mt-14">
+          <SkillsMarquee />
         </div>
       </section>
 
@@ -182,14 +176,25 @@ export default function Home() {
               you&apos;re building. Drop me a line and I&apos;ll get back to
               you.
             </p>
-            <a
-              href={`mailto:${profile.email}`}
-              className="contact-button group inline-flex items-center gap-2.5 rounded-lg px-6 py-3 text-base font-medium text-white sm:text-lg"
-            >
-              <MailIcon size={18} />
-              {profile.email}
-              <ArrowIcon size={16} />
-            </a>
+            <div className="space-y-3">
+              <a
+                href={`mailto:${profile.email}`}
+                className="contact-button group inline-flex items-center gap-2.5 rounded-lg px-6 py-3 text-base font-medium text-white sm:text-lg"
+              >
+                <MailIcon size={18} />
+                Email me
+                <ArrowIcon size={16} />
+              </a>
+              <p className="text-sm break-all text-[color:var(--muted)]">
+                or reach me at{" "}
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="link-underline text-[color:var(--foreground)]"
+                >
+                  {profile.email}
+                </a>
+              </p>
+            </div>
           </div>
         </section>
       </Reveal>

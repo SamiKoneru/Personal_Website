@@ -26,6 +26,13 @@ export type Education = {
 
 export type CurrentlyItem = { label: string; value: string };
 export type Interest = { title: string; detail?: string };
+export type Skill = {
+  name: string;
+  /** devicon path segment, e.g. "python/python-original". Omit if no brand icon. */
+  icon?: string;
+  /** Set for dark/monochrome icons (e.g. Rust) so they stay visible in dark mode. */
+  invertOnDark?: boolean;
+};
 
 export const profile = {
   name: "Sami Koneru-Ansari",
@@ -66,19 +73,19 @@ export const profile = {
   ] satisfies Education[],
 
   skills: [
-    "Python",
-    "C++",
-    "CUDA",
-    "PyTorch",
-    "Rust",
-    "TypeScript",
-    "React",
-    "Node.js",
-    "SQL",
-    "LangChain",
-    "Docker",
-    "AWS",
-  ],
+    { name: "Python", icon: "python/python-original" },
+    { name: "C++", icon: "cplusplus/cplusplus-original" },
+    { name: "CUDA" },
+    { name: "PyTorch", icon: "pytorch/pytorch-original" },
+    { name: "Rust", icon: "rust/rust-original", invertOnDark: true },
+    { name: "TypeScript", icon: "typescript/typescript-original" },
+    { name: "React", icon: "react/react-original" },
+    { name: "Node.js", icon: "nodejs/nodejs-original" },
+    { name: "PostgreSQL", icon: "postgresql/postgresql-original" },
+    { name: "LangChain" },
+    { name: "Docker", icon: "docker/docker-original" },
+    { name: "AWS" },
+  ] satisfies Skill[],
 
   experience: [
     {
