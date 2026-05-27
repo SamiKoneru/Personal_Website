@@ -43,7 +43,11 @@ export default function Home() {
                 <a
                   key={l.label}
                   href={l.href}
-                  target={l.href.startsWith("http") ? "_blank" : undefined}
+                  target={
+                    l.href.startsWith("http") || l.href.endsWith(".pdf")
+                      ? "_blank"
+                      : undefined
+                  }
                   rel="noopener noreferrer"
                   className="link-underline text-[color:var(--muted)] hover:text-[color:var(--foreground)]"
                 >
