@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0d12" />
+<meta name="color-scheme" content="dark" />
+<title>How the brain works — neurons, learning, memory</title>
+<meta name="description" content="A compact walkthrough of how the brain works, from neurons and synapses up to learning and memory consolidation. For readers with biology + ML background." />
+<style>
+  :root {
+    --bg:        #0b0d12;
+    --bg-soft:   #11141c;
+    --panel:     #141823;
+    --panel-2:   #1a1f2c;
+    --border:    #232a3a;
+    --fg:        #e8ecf3;
+    --muted:     #9aa3b6;
+    --dim:       #6f7790;
+
+    --accent-1:  #7c5cff;   /* purple */
+    --accent-2:  #22d3ee;   /* cyan   */
+    --accent-3:  #f472b6;   /* pink   */
+    --accent-4:  #fbbf24;   /* amber  */
+    --accent-5:  #34d399;   /* mint   */
+    --accent-6:  #f87171;   /* coral  */
+
+    --radius: 14px;
+    --radius-sm: 10px;
+    --maxw: 880px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background:
+      radial-gradient(1200px 700px at 10% -10%, rgba(124,92,255,0.18), transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, rgba(34,211,238,0.12), transparent 60%),
+      var(--bg);
+    color: var(--fg);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 56px 22px 120px;
+  }
+
+  /* ====== header ====== */
+  header.hero {
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.02);
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    box-shadow: 0 0 12px rgba(124,92,255,0.7);
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.08;
+    margin: 18px 0 14px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(120deg, #ffffff 0%, #cfd6e6 60%, #8aa0c8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 17.5px;
+    max-width: 60ch;
+  }
+
+  /* ====== TOC ====== */
+  nav.toc {
+    margin-top: 32px;
+    padding: 18px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-soft) 100%);
+  }
+  nav.toc h2 {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 12px;
+  }
+  nav.toc ol {
+    margin: 0; padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    counter-reset: tocnum;
+  }
+  @media (min-width: 620px) {
+    nav.toc ol { grid-template-columns: 1fr 1fr; gap: 6px 18px; }
+  }
+  nav.toc li { counter-increment: tocnum; }
+  nav.toc a {
+    color: var(--fg);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 15.5px;
+  }
+  nav.toc a::before {
+    content: counter(tocnum, decimal-leading-zero);
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+  }
+  nav.toc a:hover { color: var(--accent-2); }
+
+  /* ====== sections ====== */
+  section.chapter {
+    margin-top: 64px;
+    scroll-margin-top: 24px;
+  }
+  section.chapter > h2 {
+    font-size: clamp(24px, 3.6vw, 30px);
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  section.chapter > h2 .ch-num {
+    font-size: 12.5px;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+    font-weight: 600;
+  }
+  section.chapter > .sub {
+    color: var(--muted);
+    margin: 0 0 22px;
+    font-size: 15.5px;
+  }
+  h3 {
+    font-size: 19px;
+    margin: 28px 0 8px;
+    letter-spacing: -0.005em;
+  }
+  p { margin: 0 0 14px; }
+  p + p { margin-top: 10px; }
+
+  /* ====== visuals ====== */
+  figure.viz {
+    margin: 22px 0 8px;
+    padding: 18px 16px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-soft) 100%);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+  }
+  figure.viz svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  figure.viz figcaption {
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* SVG label styling */
+  .label, text { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .label-text { fill: #cfd6e6; font-size: 12px; }
+  .label-text-sm { fill: #cfd6e6; font-size: 11px; }
+  .label-text-strong { fill: #ffffff; font-size: 13px; font-weight: 600; }
+  .label-line { stroke: #4b5267; stroke-width: 1; }
+
+  /* ====== callout ====== */
+  aside.callout {
+    margin: 22px 0;
+    padding: 16px 18px;
+    border-left: 3px solid var(--accent-2);
+    background: linear-gradient(90deg, rgba(34,211,238,0.07), rgba(34,211,238,0) 70%);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  aside.callout.purple { border-left-color: var(--accent-1); background: linear-gradient(90deg, rgba(124,92,255,0.08), rgba(124,92,255,0) 70%); }
+  aside.callout.pink   { border-left-color: var(--accent-3); background: linear-gradient(90deg, rgba(244,114,182,0.08), rgba(244,114,182,0) 70%); }
+  aside.callout.amber  { border-left-color: var(--accent-4); background: linear-gradient(90deg, rgba(251,191,36,0.08), rgba(251,191,36,0) 70%); }
+  aside.callout.mint   { border-left-color: var(--accent-5); background: linear-gradient(90deg, rgba(52,211,153,0.08), rgba(52,211,153,0) 70%); }
+  aside.callout .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  aside.callout p:last-child { margin-bottom: 0; }
+
+  /* ====== inline term ====== */
+  .term {
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 1px dotted rgba(255,255,255,0.35);
+  }
+  code, .mono {
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.92em;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 6px;
+    color: #d8def0;
+  }
+
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+
+  /* ====== two-column ====== */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 16px 0 8px;
+  }
+  @media (min-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr 1fr; gap: 16px; }
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: var(--panel-2);
+  }
+  .card h4 {
+    margin: 0 0 4px;
+    font-size: 14.5px;
+    letter-spacing: 0.02em;
+    color: #fff;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pill {
+    display: inline-block;
+    width: 10px; height: 10px; border-radius: 3px;
+    background: var(--accent-2);
+  }
+
+  /* ====== footer ====== */
+  footer.foot {
+    margin-top: 96px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    color: var(--dim);
+    font-size: 13.5px;
+    display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between;
+  }
+  footer.foot a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--border); }
+  footer.foot a:hover { color: var(--accent-2); }
+
+  /* ====== misc ====== */
+  ::selection { background: rgba(124,92,255,0.35); color: #fff; }
+  @media (prefers-reduced-motion: no-preference) {
+    .spike { animation: pulse 3s ease-in-out infinite; transform-origin: center; }
+    @keyframes pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow"><span class="dot"></span> A field guide</span>
+  <h1>How the brain works.</h1>
+  <p class="lede">
+    A compact walkthrough — from the spiking unit of computation all the way up to
+    why you can still remember your phone number from middle school. Written for
+    someone who knows what a gradient is and what a cell membrane is, but hasn't
+    spent a semester on neuroscience.
+  </p>
+
+  <nav class="toc" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#neuron">The neuron</a></li>
+      <li><a href="#spike">Spikes &amp; action potentials</a></li>
+      <li><a href="#synapse">The synapse</a></li>
+      <li><a href="#plasticity">Plasticity &amp; Hebbian learning</a></li>
+      <li><a href="#circuits">Circuits, not neurons</a></li>
+      <li><a href="#learning">How the brain learns</a></li>
+      <li><a href="#memory">Memory: kinds &amp; timescales</a></li>
+      <li><a href="#consolidation">Consolidation &amp; sleep</a></li>
+      <li><a href="#systems">The system view</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ============================================== -->
+<section id="neuron" class="chapter">
+  <h2><span class="ch-num">01</span> The neuron</h2>
+  <p class="sub">The cell that does the computing.</p>
+
+  <p>
+    The brain has on the order of <strong>86 billion neurons</strong>, plus a roughly
+    equal number of support cells (glia). A neuron is a regular animal cell that has
+    specialized into one job: receive electrical signals on one end, decide whether
+    to fire, and send a signal out the other end.
+  </p>
+
+  <figure class="viz" aria-label="Diagram of a neuron showing dendrites, soma, axon, myelin sheath, and axon terminals">
+    <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="neuron-title">
+      <title id="neuron-title">Anatomy of a neuron</title>
+      <defs>
+        <radialGradient id="somaGrad" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="#9b7bff"/>
+          <stop offset="100%" stop-color="#5b3fcf"/>
+        </radialGradient>
+        <linearGradient id="axonGrad" x1="0" x2="1">
+          <stop offset="0%" stop-color="#7c5cff"/>
+          <stop offset="100%" stop-color="#22d3ee"/>
+        </linearGradient>
+        <linearGradient id="myelinGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fbbf24"/>
+          <stop offset="100%" stop-color="#d97706"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Dendrites: branching lines on the left -->
+      <g stroke="#a78bff" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <path d="M55,60   C 105,90  140,110 170,130"/>
+        <path d="M40,110  C  90,120 130,130 170,140"/>
+        <path d="M50,165  C 100,160 140,155 175,150"/>
+        <path d="M45,215  C  95,200 135,180 175,160"/>
+        <path d="M60,260  C 110,235 150,200 180,170"/>
+        <!-- secondary branches -->
+        <path d="M105,75  C 115,65  120,55  118,40"/>
+        <path d="M150,118 C 162,105 168,95  170,82"/>
+        <path d="M88,205  C 80,220  72,232  60,240"/>
+        <path d="M138,240 C 148,255 155,265 160,278"/>
+      </g>
+
+      <!-- Soma (cell body) -->
+      <ellipse cx="220" cy="160" rx="55" ry="48" fill="url(#somaGrad)" stroke="#c7b3ff" stroke-width="1.5"/>
+      <!-- Nucleus -->
+      <circle cx="220" cy="160" r="18" fill="#2a1d6e" stroke="#d5c8ff" stroke-width="1.2"/>
+      <circle cx="220" cy="160" r="6" fill="#9b7bff"/>
+
+      <!-- Axon hillock + axon -->
+      <path d="M273,160 C 290,160 300,158 315,162" stroke="url(#axonGrad)" stroke-width="10" fill="none" stroke-linecap="round"/>
+
+      <!-- Myelin segments -->
+      <g>
+        <rect x="320" y="150" width="55" height="22" rx="11" fill="url(#myelinGrad)" stroke="#7a4d05" stroke-width="1"/>
+        <rect x="390" y="150" width="55" height="22" rx="11" fill="url(#myelinGrad)" stroke="#7a4d05" stroke-width="1"/>
+        <rect x="460" y="150" width="55" height="22" rx="11" fill="url(#myelinGrad)" stroke="#7a4d05" stroke-width="1"/>
+        <rect x="530" y="150" width="55" height="22" rx="11" fill="url(#myelinGrad)" stroke="#7a4d05" stroke-width="1"/>
+      </g>
+      <!-- Axon line through myelin -->
+      <line x1="315" y1="161" x2="600" y2="161" stroke="#22d3ee" stroke-width="3" opacity="0.55"/>
+
+      <!-- Axon terminals -->
+      <g stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <path d="M600,161 C 620,150 645,140 670,135"/>
+        <path d="M600,161 C 625,162 650,165 675,168"/>
+        <path d="M600,161 C 620,175 645,188 670,195"/>
+      </g>
+      <g fill="#f472b6" stroke="#fff" stroke-width="0.8">
+        <circle cx="675" cy="133" r="6"/>
+        <circle cx="680" cy="169" r="6"/>
+        <circle cx="675" cy="197" r="6"/>
+      </g>
+
+      <!-- Labels -->
+      <g class="label-text">
+        <text x="40"  y="30" class="label-text-strong">Dendrites</text>
+        <text x="40"  y="46">inputs — collect signals</text>
+
+        <text x="195" y="100" class="label-text-strong" text-anchor="middle">Soma</text>
+        <text x="195" y="115" text-anchor="middle">cell body / integrator</text>
+
+        <text x="220" y="232" class="label-text-strong" text-anchor="middle">Nucleus</text>
+
+        <text x="335" y="135" class="label-text-strong">Axon</text>
+        <text x="335" y="200">long output cable</text>
+
+        <text x="447" y="200" class="label-text-strong" text-anchor="middle">Myelin sheath</text>
+        <text x="447" y="216" text-anchor="middle">insulation, speeds signal</text>
+
+        <text x="700" y="135" class="label-text-strong" text-anchor="start">Axon</text>
+        <text x="700" y="152" text-anchor="start">terminals</text>
+        <text x="700" y="170" text-anchor="start">→ next neuron</text>
+      </g>
+    </svg>
+    <figcaption>A neuron, end to end. Inputs flow in on the dendrites; the soma integrates; the axon carries the output.</figcaption>
+  </figure>
+
+  <p>
+    The parts to remember are:
+  </p>
+  <ul>
+    <li><span class="term">Dendrites</span> — input branches. A typical cortical neuron has thousands of them, each receiving signals from other neurons.</li>
+    <li><span class="term">Soma</span> — the cell body. Adds up all the incoming signals and decides whether to fire.</li>
+    <li><span class="term">Axon</span> — the output cable. Just one per neuron, but it can branch a lot at the far end.</li>
+    <li><span class="term">Myelin sheath</span> — a fatty insulation wrapped around the axon at intervals. Lets the signal jump from gap to gap (a process called <em>saltatory conduction</em>) and makes it much faster.</li>
+    <li><span class="term">Axon terminals</span> — where the neuron's output meets the next neuron's input. The contact point is the synapse.</li>
+  </ul>
+
+  <aside class="callout purple">
+    <span class="tag">ML mapping</span>
+    <p>The cartoon version: dendrites are <code>x_i</code>, synapses are <code>w_i</code>, the soma does the weighted sum, and the axon carries the output. Where it breaks: real neurons don't output a single scalar — they output a <em>spike train</em>, dendrites do their own local nonlinear processing, and "weights" are physical machinery that can be on the order of dozens of milliseconds to update.</p>
+  </aside>
+</section>
+
+<!-- ============================================== -->
+<section id="spike" class="chapter">
+  <h2><span class="ch-num">02</span> Spikes &amp; action potentials</h2>
+  <p class="sub">How a neuron actually "fires."</p>
+
+  <p>
+    A neuron at rest sits at about <strong>−70 mV</strong> inside relative to outside. That gradient is maintained by an ion pump (the Na⁺/K⁺ pump) that constantly trades sodium ions out for potassium ions in. The cell is essentially a charged battery, kept charged by burning ATP.
+  </p>
+  <p>
+    When dendrites receive enough excitatory input, the voltage inside the soma rises. If it crosses a threshold around <strong>−55 mV</strong>, a chain reaction kicks off: voltage-gated sodium channels in the membrane fly open, sodium rushes in, the voltage spikes to about <strong>+30 mV</strong>, and then potassium channels open to bring it back down — overshooting briefly into a <em>refractory</em> period before resetting. That whole event is the <span class="term">action potential</span>, or <em>spike</em>. It takes about 1–2 milliseconds.
+  </p>
+
+  <figure class="viz" aria-label="Plot of membrane voltage over time during an action potential">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ap-title">
+      <title id="ap-title">An action potential</title>
+      <defs>
+        <linearGradient id="spikeFill" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Axes -->
+      <g stroke="#3a4358" stroke-width="1">
+        <line x1="60" y1="40"  x2="60"  y2="240"/>
+        <line x1="60" y1="240" x2="660" y2="240"/>
+      </g>
+      <!-- gridlines -->
+      <g stroke="#222a3a" stroke-width="1" stroke-dasharray="3 4">
+        <line x1="60" y1="80"  x2="660" y2="80"/>
+        <line x1="60" y1="130" x2="660" y2="130"/>
+        <line x1="60" y1="180" x2="660" y2="180"/>
+      </g>
+
+      <!-- voltage curve: rest -> threshold -> spike -> repol -> hyperpol -> rest -->
+      <path d="
+        M 60,180
+        L 180,180
+        C 230,180 240,175 260,162
+        C 285,142 295,120 305,100
+        C 320,70 335,55 360,52
+        C 385,55 400,72 420,110
+        C 440,150 455,185 475,205
+        C 495,220 510,215 530,200
+        C 555,182 575,180 600,180
+        L 660,180
+      " fill="url(#spikeFill)" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- threshold dashed line -->
+      <line x1="60" y1="180" x2="660" y2="180" stroke="#f87171" stroke-dasharray="6 6" stroke-width="1.2" opacity="0.8"/>
+      <!-- resting line -->
+      <line x1="60" y1="200" x2="660" y2="200" stroke="#34d399" stroke-dasharray="3 5" stroke-width="1" opacity="0.6"/>
+
+      <!-- axis labels -->
+      <g class="label-text">
+        <text x="48" y="46"  text-anchor="end">+30 mV</text>
+        <text x="48" y="134" text-anchor="end">0 mV</text>
+        <text x="48" y="184" text-anchor="end">−55 mV</text>
+        <text x="48" y="204" text-anchor="end">−70 mV</text>
+        <text x="660" y="260" text-anchor="end">time (ms)</text>
+        <text x="40" y="32" class="label-text-strong">V</text>
+      </g>
+
+      <!-- phase labels -->
+      <g class="label-text-sm">
+        <text x="260" y="160" fill="#f87171">threshold (~−55)</text>
+        <text x="355" y="44" text-anchor="middle" fill="#22d3ee">spike (Na⁺ in)</text>
+        <text x="455" y="175" fill="#a78bff" text-anchor="middle">repolarize (K⁺ out)</text>
+        <text x="540" y="218" fill="#fbbf24" text-anchor="middle">refractory</text>
+        <text x="170" y="195" fill="#34d399">rest (−70)</text>
+      </g>
+    </svg>
+    <figcaption>A single spike. All-or-nothing: cross threshold and the whole event runs to completion at the same height and shape every time.</figcaption>
+  </figure>
+
+  <p>
+    Two consequences worth keeping in mind:
+  </p>
+  <ul>
+    <li><strong>All-or-nothing.</strong> A spike's shape and amplitude don't depend on how strong the input was. The output is a binary event. <em>Information is in the timing and frequency of spikes</em>, not in their size.</li>
+    <li><strong>Refractory period.</strong> For a millisecond or two after a spike, the neuron can't fire again. This caps the maximum firing rate at a few hundred Hz.</li>
+  </ul>
+
+  <aside class="callout">
+    <span class="tag">Quick sanity check</span>
+    <p>Action potentials propagate down the axon at roughly <strong>1–100 m/s</strong> depending on diameter and myelination. Compare to electrons in a copper wire (~2/3 the speed of light). Brains are slow and parallel; CPUs are fast and serial.</p>
+  </aside>
+</section>
+
+<!-- ============================================== -->
+<section id="synapse" class="chapter">
+  <h2><span class="ch-num">03</span> The synapse</h2>
+  <p class="sub">Where one neuron talks to the next.</p>
+
+  <p>
+    When a spike reaches the axon terminal, it doesn't jump directly to the next neuron — there's a tiny gap (~20 nm) called the <span class="term">synaptic cleft</span>. The signal converts from electrical to chemical to cross it.
+  </p>
+
+  <figure class="viz" aria-label="Diagram of a chemical synapse showing vesicles, neurotransmitters, and receptors">
+    <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="syn-title">
+      <title id="syn-title">A chemical synapse</title>
+      <defs>
+        <linearGradient id="preGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#7c5cff"/>
+          <stop offset="100%" stop-color="#4b2ec0"/>
+        </linearGradient>
+        <linearGradient id="postGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#0e9aa6"/>
+          <stop offset="100%" stop-color="#22d3ee"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Presynaptic terminal (top) -->
+      <path d="M120,30 Q380,10 640,30 L640,140 Q380,170 120,140 Z" fill="url(#preGrad)" stroke="#c7b3ff" stroke-width="1.2"/>
+
+      <!-- Vesicles -->
+      <g fill="#fde68a" stroke="#b45309" stroke-width="0.8">
+        <circle cx="220" cy="70" r="10"/>
+        <circle cx="260" cy="55" r="10"/>
+        <circle cx="300" cy="80" r="10"/>
+        <circle cx="190" cy="100" r="10"/>
+        <circle cx="345" cy="58" r="10"/>
+        <circle cx="380" cy="85" r="10"/>
+        <circle cx="420" cy="68" r="10"/>
+        <circle cx="465" cy="92" r="10"/>
+        <circle cx="510" cy="62" r="10"/>
+        <circle cx="555" cy="78" r="10"/>
+      </g>
+      <!-- vesicle inner dots -->
+      <g fill="#f59e0b">
+        <circle cx="220" cy="70" r="3"/>
+        <circle cx="260" cy="55" r="3"/>
+        <circle cx="300" cy="80" r="3"/>
+        <circle cx="190" cy="100" r="3"/>
+        <circle cx="345" cy="58" r="3"/>
+        <circle cx="380" cy="85" r="3"/>
+        <circle cx="420" cy="68" r="3"/>
+        <circle cx="465" cy="92" r="3"/>
+        <circle cx="510" cy="62" r="3"/>
+        <circle cx="555" cy="78" r="3"/>
+      </g>
+
+      <!-- fusing vesicle -->
+      <path d="M345,135 a14,14 0 1,1 0.01,0 Z" fill="#fde68a" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <path d="M339,148 q6,-6 12,0 q-2,4 -6,4 q-4,0 -6,-4 Z" fill="#fde68a" stroke="#b45309" stroke-width="0.8"/>
+
+      <!-- Synaptic cleft gap -->
+      <rect x="120" y="170" width="520" height="30" fill="none"/>
+
+      <!-- Neurotransmitter molecules in cleft -->
+      <g fill="#f59e0b" stroke="#b45309" stroke-width="0.6">
+        <circle cx="310" cy="180" r="3.5"/>
+        <circle cx="330" cy="190" r="3.5"/>
+        <circle cx="350" cy="178" r="3.5"/>
+        <circle cx="370" cy="192" r="3.5"/>
+        <circle cx="390" cy="184" r="3.5"/>
+        <circle cx="285" cy="188" r="3.5"/>
+        <circle cx="405" cy="178" r="3.5"/>
+      </g>
+
+      <!-- Postsynaptic membrane (bottom) -->
+      <path d="M120,200 Q380,180 640,200 L640,310 Q380,330 120,310 Z" fill="url(#postGrad)" stroke="#a5f3fc" stroke-width="1.2"/>
+
+      <!-- Receptors as little notched shapes -->
+      <g fill="#1e293b" stroke="#a5f3fc" stroke-width="1.2">
+        <path d="M270,200 l8,-8 l12,0 l8,8 l0,14 l-28,0 z"/>
+        <path d="M310,200 l8,-8 l12,0 l8,8 l0,14 l-28,0 z"/>
+        <path d="M350,200 l8,-8 l12,0 l8,8 l0,14 l-28,0 z"/>
+        <path d="M390,200 l8,-8 l12,0 l8,8 l0,14 l-28,0 z"/>
+        <path d="M430,200 l8,-8 l12,0 l8,8 l0,14 l-28,0 z"/>
+      </g>
+
+      <!-- Ion flow arrow into postsynaptic -->
+      <g stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#arrowIon)">
+        <path d="M370,224 q 0,20 0,40"/>
+      </g>
+      <defs>
+        <marker id="arrowIon" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/>
+        </marker>
+      </defs>
+      <text x="380" y="260" class="label-text-sm" fill="#34d399">ion flow</text>
+
+      <!-- Labels -->
+      <g class="label-text">
+        <text x="140" y="65" class="label-text-strong">Presynaptic terminal</text>
+        <text x="140" y="82">axon ending of sending neuron</text>
+
+        <text x="140" y="280" class="label-text-strong">Postsynaptic membrane</text>
+        <text x="140" y="297">dendrite of receiving neuron</text>
+
+        <text x="600" y="105" class="label-text-strong" text-anchor="end">Vesicles</text>
+        <text x="600" y="122" text-anchor="end">pre-packed with neurotransmitter</text>
+
+        <text x="455" y="180" class="label-text-strong">Cleft</text>
+        <text x="455" y="195">~20 nm gap</text>
+
+        <text x="600" y="220" class="label-text-strong" text-anchor="end">Receptors</text>
+        <text x="600" y="236" text-anchor="end">ion channels that open on binding</text>
+      </g>
+    </svg>
+    <figcaption>The signal goes electrical → chemical → electrical. Vesicles fuse, dump neurotransmitter into the cleft, and it binds to receptors on the other side.</figcaption>
+  </figure>
+
+  <p>The mechanism, in order:</p>
+  <ol>
+    <li>The spike arrives at the axon terminal, opening voltage-gated <strong>calcium channels</strong>.</li>
+    <li>Ca²⁺ rushes in. Calcium triggers nearby <strong>vesicles</strong> (little membrane-bound bags pre-packed with neurotransmitter) to fuse with the cell membrane and dump their contents into the cleft.</li>
+    <li>The released <strong>neurotransmitter</strong> (often glutamate or GABA) diffuses across, binds to receptors on the postsynaptic side.</li>
+    <li>The receptor is an ion channel. Binding opens it, ions flow in, and the postsynaptic voltage shifts — either up (excitatory, EPSP) or down (inhibitory, IPSP).</li>
+    <li>If the postsynaptic neuron's total input crosses threshold, <em>it</em> spikes, and the process repeats.</li>
+  </ol>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4><span class="pill" style="background:#34d399"></span>Excitatory (glutamate)</h4>
+      <p>Pushes the receiving neuron toward firing. Roughly 80% of cortical synapses are excitatory.</p>
+    </div>
+    <div class="card">
+      <h4><span class="pill" style="background:#f87171"></span>Inhibitory (GABA)</h4>
+      <p>Pushes it away from firing. Critical for keeping the network from runaway feedback — without inhibition, you get a seizure.</p>
+    </div>
+  </div>
+
+  <aside class="callout amber">
+    <span class="tag">Neuromodulators ≠ neurotransmitters</span>
+    <p>
+      Some chemicals (<strong>dopamine, serotonin, norepinephrine, acetylcholine</strong>) don't carry the main message — they tune <em>how</em> nearby synapses respond. Think of them as global signals injected into many circuits at once: "this moment was rewarding," "pay attention," "stay calm." They show up again in the learning section.
+    </p>
+  </aside>
+</section>
+
+<!-- ============================================== -->
+<section id="plasticity" class="chapter">
+  <h2><span class="ch-num">04</span> Plasticity &amp; Hebbian learning</h2>
+  <p class="sub">Why synapses are not static.</p>
+
+  <p>
+    The connection strength between two neurons isn't fixed. It changes based on activity. This is <span class="term">synaptic plasticity</span>, and it's the physical substrate of learning. The standard summary, attributed to Donald Hebb:
+  </p>
+
+  <aside class="callout purple">
+    <span class="tag">Hebb's rule</span>
+    <p>"Neurons that fire together, wire together." If neuron A consistently helps fire neuron B, the synapse from A to B gets stronger. If A consistently fails to help, it weakens.</p>
+  </aside>
+
+  <p>The two flavors:</p>
+  <ul>
+    <li><span class="term">LTP</span> (long-term potentiation) — repeated, well-timed activation strengthens the synapse. More receptors get inserted into the postsynaptic membrane, the same amount of neurotransmitter produces a bigger response.</li>
+    <li><span class="term">LTD</span> (long-term depression) — uncorrelated or badly-timed activity weakens the synapse. Receptors get pulled out.</li>
+  </ul>
+
+  <p>
+    Whether a synapse strengthens or weakens depends sensitively on <em>timing</em>: if the presynaptic spike arrives a few milliseconds <em>before</em> the postsynaptic neuron fires, LTP. If it arrives <em>after</em>, LTD. This is called <span class="term">spike-timing-dependent plasticity (STDP)</span>, and it's roughly the brain's local credit-assignment rule — a synapse gets credit when its input actually helped cause the output.
+  </p>
+
+  <figure class="viz" aria-label="Two synapses, one strengthened and one weakened">
+    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ltp-title">
+      <title id="ltp-title">LTP and LTD</title>
+
+      <!-- LEFT: strengthened (LTP) -->
+      <g>
+        <circle cx="120" cy="80"  r="28" fill="#7c5cff" stroke="#c7b3ff" stroke-width="1.5"/>
+        <circle cx="120" cy="200" r="28" fill="#22d3ee" stroke="#a5f3fc" stroke-width="1.5"/>
+        <line x1="120" y1="108" x2="120" y2="172" stroke="#34d399" stroke-width="10" stroke-linecap="round"/>
+        <!-- neurotransmitter dots -->
+        <g fill="#fbbf24">
+          <circle cx="100" cy="140" r="3"/>
+          <circle cx="110" cy="135" r="3"/>
+          <circle cx="125" cy="145" r="3"/>
+          <circle cx="135" cy="138" r="3"/>
+          <circle cx="115" cy="150" r="3"/>
+          <circle cx="130" cy="130" r="3"/>
+        </g>
+        <text x="120" y="42"  text-anchor="middle" class="label-text-strong">A</text>
+        <text x="120" y="240" text-anchor="middle" class="label-text-strong">B</text>
+        <text x="220" y="135" class="label-text-strong" fill="#34d399">LTP</text>
+        <text x="220" y="153" class="label-text-sm">A reliably caused B → strengthen</text>
+        <text x="220" y="170" class="label-text-sm">more receptors, bigger response</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="430" y1="40" x2="430" y2="260" stroke="#232a3a" stroke-dasharray="4 6"/>
+
+      <!-- RIGHT: weakened (LTD) -->
+      <g>
+        <circle cx="540" cy="80"  r="28" fill="#7c5cff" stroke="#c7b3ff" stroke-width="1.5"/>
+        <circle cx="540" cy="200" r="28" fill="#22d3ee" stroke="#a5f3fc" stroke-width="1.5"/>
+        <line x1="540" y1="108" x2="540" y2="172" stroke="#f87171" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 4"/>
+        <!-- sparse dots -->
+        <g fill="#fbbf24" opacity="0.6">
+          <circle cx="530" cy="142" r="2.5"/>
+          <circle cx="548" cy="146" r="2.5"/>
+        </g>
+        <text x="540" y="42"  text-anchor="middle" class="label-text-strong">A</text>
+        <text x="540" y="240" text-anchor="middle" class="label-text-strong">B</text>
+        <text x="640" y="135" class="label-text-strong" fill="#f87171">LTD</text>
+        <text x="640" y="153" class="label-text-sm">A fired but B didn't, or wrong order</text>
+        <text x="640" y="170" class="label-text-sm">→ weaken</text>
+      </g>
+    </svg>
+    <figcaption>The thick green wire on the left is the same synapse as the thin dashed red one on the right — just shaped by different activity histories.</figcaption>
+  </figure>
+
+  <aside class="callout">
+    <span class="tag">ML mapping</span>
+    <p>
+      STDP is local — each synapse updates based only on what its own pre- and postsynaptic neurons did. There's no global error signal threading backward through the network like in backprop. This is one of the biggest open questions in computational neuroscience: how does the brain solve credit assignment <em>without</em> backprop? Candidates include feedback alignment, predictive coding, and dopamine-gated three-factor rules (the third factor being a neuromodulator that says <em>now</em>).
+    </p>
+  </aside>
+
+  <p>
+    Plasticity also includes <span class="term">structural changes</span> — entire new synapses forming, old ones pruned away, dendritic spines growing or shrinking. Most of this happens on the scale of hours to days, not milliseconds. Childhood and adolescence are periods of massive synaptic pruning: you start with roughly twice as many synapses as you'll end up with, and the brain throws away the ones that didn't get used.
+  </p>
+</section>
+
+<!-- ============================================== -->
+<section id="circuits" class="chapter">
+  <h2><span class="ch-num">05</span> Circuits, not neurons</h2>
+  <p class="sub">A single neuron doesn't compute anything interesting.</p>
+
+  <p>
+    Most of what the brain does happens at the <strong>circuit</strong> level — small groups of tens to thousands of neurons wired together. A few recurring motifs:
+  </p>
+
+  <ul>
+    <li><span class="term">Feedforward</span>: input → layer → layer → output. Standard "sensory processing" shape, e.g. retina → thalamus → V1 → V2 → … in vision.</li>
+    <li><span class="term">Recurrent</span>: neurons in a layer connect to each other. Lets a circuit hold a state over time — short-term memory traces, working memory.</li>
+    <li><span class="term">Feedback / top-down</span>: higher areas project back to lower ones, biasing what gets noticed. Attention and prediction live here.</li>
+    <li><span class="term">Inhibitory interneurons</span>: small local cells that gate or normalize activity. They're why the cortex doesn't seize.</li>
+  </ul>
+
+  <p>
+    A useful mental picture: every "thought," memory, or perception corresponds to a specific pattern of activity across many neurons — a vector in a very high-dimensional space. Concepts are not stored in single neurons (mostly). They're <em>distributed</em>.
+  </p>
+</section>
+
+<!-- ============================================== -->
+<section id="learning" class="chapter">
+  <h2><span class="ch-num">06</span> How the brain learns</h2>
+  <p class="sub">Three learning signals, layered on top of plasticity.</p>
+
+  <p>
+    Plasticity gives the brain a mechanism for changing connection strengths. But you still need a <em>signal</em> that says which changes to make. The brain seems to use at least three, blended together:
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4><span class="pill" style="background:#7c5cff"></span>Unsupervised / Hebbian</h4>
+      <p>"What fires together wires together." Captures statistical structure in the input — natural images, sound, motion. No teacher needed; co-occurrence is the signal. This is most of what early sensory cortex learns.</p>
+    </div>
+    <div class="card">
+      <h4><span class="pill" style="background:#fbbf24"></span>Reinforcement (dopamine)</h4>
+      <p>Midbrain dopamine neurons fire when an outcome is better than expected. The signal they broadcast is essentially a <strong>reward prediction error</strong> — TD-error in RL terms. Synapses that were recently active when dopamine fires get strengthened.</p>
+    </div>
+    <div class="card">
+      <h4><span class="pill" style="background:#22d3ee"></span>Supervised-ish</h4>
+      <p>Pure supervised learning with labeled targets is rare in the brain. But error-correcting circuits (cerebellum, predictive coding in cortex) effectively learn from the gap between expected and actual sensory input — a form of self-supervised learning.</p>
+    </div>
+    <div class="card">
+      <h4><span class="pill" style="background:#f472b6"></span>Neuromodulator gating</h4>
+      <p>Acetylcholine and norepinephrine tell circuits "this moment matters — turn up plasticity." Plasticity isn't always on; it's strongly gated by attention and arousal. Boring inputs barely write to memory.</p>
+    </div>
+  </div>
+
+  <aside class="callout mint">
+    <span class="tag">The dopamine = RPE story</span>
+    <p>
+      Wolfram Schultz's monkey experiments in the '90s are the canonical result: train a monkey that a tone predicts juice, and the dopamine response gradually shifts from the juice onset to the tone onset. When the tone plays but no juice arrives, dopamine drops below baseline. This is a textbook TD(0) signal, computed by biology decades before anyone built it in code.
+    </p>
+  </aside>
+
+  <p>
+    "Learning" in everyday usage spans wildly different timescales:
+    perceptual learning (recognizing a new face) takes seconds to a few minutes;
+    motor skill learning (a tennis backhand, a new piano piece) takes weeks of repetition and shows up as changes in motor cortex and cerebellum;
+    declarative learning (facts you can state out loud) is fast at encoding but needs the hippocampus and consolidation, which is the next section.
+  </p>
+</section>
+
+<!-- ============================================== -->
+<section id="memory" class="chapter">
+  <h2><span class="ch-num">07</span> Memory: kinds &amp; timescales</h2>
+  <p class="sub">There is no single "memory system."</p>
+
+  <p>
+    Memory isn't one thing. It's several mechanisms operating on different timescales and stored in different physical places. The cleanest carving:
+  </p>
+
+  <figure class="viz" aria-label="Hierarchy of memory types">
+    <svg viewBox="0 0 780 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mem-title">
+      <title id="mem-title">Kinds of memory</title>
+
+      <!-- top -->
+      <rect x="290" y="20" width="200" height="44" rx="10" fill="#1a1f2c" stroke="#7c5cff" stroke-width="1.5"/>
+      <text x="390" y="48" text-anchor="middle" class="label-text-strong">Memory</text>
+
+      <!-- branch lines -->
+      <line x1="390" y1="64"  x2="200" y2="110" stroke="#4b5267" stroke-width="1"/>
+      <line x1="390" y1="64"  x2="580" y2="110" stroke="#4b5267" stroke-width="1"/>
+
+      <!-- Short term -->
+      <rect x="100" y="110" width="200" height="44" rx="10" fill="#1a1f2c" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="200" y="138" text-anchor="middle" class="label-text-strong">Short-term / working</text>
+
+      <!-- Long term -->
+      <rect x="480" y="110" width="200" height="44" rx="10" fill="#1a1f2c" stroke="#f472b6" stroke-width="1.5"/>
+      <text x="580" y="138" text-anchor="middle" class="label-text-strong">Long-term</text>
+
+      <!-- ST sub -->
+      <line x1="200" y1="154" x2="200" y2="180" stroke="#4b5267"/>
+      <rect x="100" y="180" width="200" height="44" rx="10" fill="#0f1420" stroke="#22d3ee" stroke-width="1" opacity="0.85"/>
+      <text x="200" y="208" text-anchor="middle" class="label-text">prefrontal cortex,</text>
+      <text x="200" y="220" text-anchor="middle" class="label-text">~seconds to ~1 min</text>
+
+      <!-- LT split -->
+      <line x1="580" y1="154" x2="490" y2="190" stroke="#4b5267"/>
+      <line x1="580" y1="154" x2="670" y2="190" stroke="#4b5267"/>
+
+      <!-- Declarative -->
+      <rect x="380" y="190" width="220" height="44" rx="10" fill="#1a1f2c" stroke="#34d399" stroke-width="1.5"/>
+      <text x="490" y="218" text-anchor="middle" class="label-text-strong">Declarative (explicit)</text>
+
+      <!-- Procedural -->
+      <rect x="620" y="190" width="140" height="44" rx="10" fill="#1a1f2c" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="690" y="218" text-anchor="middle" class="label-text-strong">Procedural</text>
+
+      <!-- declarative sub -->
+      <line x1="430" y1="234" x2="360" y2="276" stroke="#4b5267"/>
+      <line x1="540" y1="234" x2="600" y2="276" stroke="#4b5267"/>
+
+      <rect x="250" y="280" width="220" height="56" rx="10" fill="#0f1420" stroke="#34d399" stroke-width="1" opacity="0.85"/>
+      <text x="360" y="302" text-anchor="middle" class="label-text-strong">Episodic</text>
+      <text x="360" y="320" text-anchor="middle" class="label-text">events, the time you fell off your bike</text>
+
+      <rect x="490" y="280" width="220" height="56" rx="10" fill="#0f1420" stroke="#34d399" stroke-width="1" opacity="0.85"/>
+      <text x="600" y="302" text-anchor="middle" class="label-text-strong">Semantic</text>
+      <text x="600" y="320" text-anchor="middle" class="label-text">facts, "Paris is in France"</text>
+
+      <!-- proc sub -->
+      <line x1="690" y1="234" x2="690" y2="280" stroke="#4b5267"/>
+      <rect x="590" y="280" width="0" height="0"/>
+      <text x="690" y="298" text-anchor="middle" class="label-text">motor skills</text>
+      <text x="690" y="314" text-anchor="middle" class="label-text">habits, "muscle memory"</text>
+      <text x="690" y="330" text-anchor="middle" class="label-text">→ basal ganglia, cerebellum</text>
+    </svg>
+    <figcaption>Different memories live in different parts of the brain. Damage to the hippocampus wipes out new episodic memories but leaves motor skills intact.</figcaption>
+  </figure>
+
+  <h3>Working memory</h3>
+  <p>
+    Holding a phone number in your head while you dial it. Lasts seconds, capped at maybe 3–4 chunks. Implemented as <em>persistent activity</em> in recurrent loops in the prefrontal cortex — the neurons keep spiking to keep the pattern alive. Nothing is "stored" in the structural sense; it's a sustained activation. Stop attending and it's gone.
+  </p>
+
+  <h3>Declarative memory</h3>
+  <p>
+    Things you can <em>state</em>: episodes (what you ate yesterday) and facts (the capital of France). New declarative memories depend critically on the <span class="term">hippocampus</span>, a curled structure in the medial temporal lobe. Patient H.M., who had both hippocampi removed for epilepsy in 1953, could not form a single new declarative memory afterward — but could still learn new motor skills, without remembering having practiced them.
+  </p>
+
+  <h3>Procedural memory</h3>
+  <p>
+    Skills and habits — riding a bike, typing, throwing a curveball. Stored in the <strong>basal ganglia</strong> and <strong>cerebellum</strong>, learned slowly through repetition, hard to verbalize. The system that handles this is mostly independent from the declarative one, which is why you can lose one without losing the other.
+  </p>
+</section>
+
+<!-- ============================================== -->
+<section id="consolidation" class="chapter">
+  <h2><span class="ch-num">08</span> Consolidation &amp; sleep</h2>
+  <p class="sub">How a fast write buffer becomes a slow weight update.</p>
+
+  <p>
+    The dominant theory of long-term memory formation is <span class="term">systems consolidation</span>, and it maps very cleanly onto a thing ML people will recognize.
+  </p>
+
+  <ul>
+    <li>An experience happens. The hippocampus binds together the cortical patterns that were co-active — sight, sound, place, time — into a single sparse index. This is fast and one-shot. You don't have to see your friend's new haircut twice to remember it.</li>
+    <li>Over hours to years, the hippocampus <em>replays</em> these patterns, especially during sleep. Each replay reactivates the same cortical patterns. With repeated reactivation, the cortex slowly forms its own direct connections — the memory becomes independent of the hippocampus.</li>
+    <li>Eventually the cortical version is strong enough to stand alone. Damage to the hippocampus now will wipe out recent memories (still being consolidated) but spare old ones (already in cortex). This pattern — temporally graded retrograde amnesia — is exactly what's observed in hippocampal patients.</li>
+  </ul>
+
+  <figure class="viz" aria-label="Hippocampus replaying patterns to the cortex during sleep">
+    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cons-title">
+      <title id="cons-title">Systems consolidation</title>
+
+      <!-- Cortex band -->
+      <path d="M40,40 C 200,10 540,10 720,40 L720,90 C 540,60 200,60 40,90 Z"
+            fill="#1a1f2c" stroke="#7c5cff" stroke-width="1.5"/>
+      <text x="380" y="36" text-anchor="middle" class="label-text-strong">Cortex (slow, distributed, long-term)</text>
+
+      <!-- Hippocampus -->
+      <g transform="translate(330,170)">
+        <path d="M0,0 C 20,-30 80,-30 100,0 C 90,15 70,18 50,12 C 30,18 10,15 0,0 Z"
+              fill="#22d3ee" stroke="#a5f3fc" stroke-width="1.5"/>
+        <text x="50" y="40" text-anchor="middle" class="label-text-strong" fill="#a5f3fc">Hippocampus</text>
+        <text x="50" y="58" text-anchor="middle" class="label-text-sm">fast index / write buffer</text>
+      </g>
+
+      <!-- replay arrows up to cortex -->
+      <g stroke="#fbbf24" stroke-width="2" fill="none" stroke-dasharray="5 5" stroke-linecap="round" class="spike">
+        <path d="M 360,170 C 320,140 280,110 240,90" marker-end="url(#arrUp)"/>
+        <path d="M 400,160 C 400,130 400,110 400,90"  marker-end="url(#arrUp)"/>
+        <path d="M 440,170 C 480,140 520,110 560,90"  marker-end="url(#arrUp)"/>
+      </g>
+      <defs>
+        <marker id="arrUp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#fbbf24"/>
+        </marker>
+      </defs>
+      <text x="600" y="130" class="label-text-sm" fill="#fbbf24">replay during sleep</text>
+      <text x="600" y="146" class="label-text-sm" fill="#fbbf24">slowly trains the cortex</text>
+    </svg>
+    <figcaption>The hippocampus replays today's patterns to the cortex (especially during sleep), and the cortex gradually internalizes them.</figcaption>
+  </figure>
+
+  <aside class="callout purple">
+    <span class="tag">ML mapping</span>
+    <p>
+      This is essentially <strong>experience replay</strong>, the same trick DQN uses. The hippocampus is a fast-write, high-capacity-but-finite buffer; the cortex is a slow-learning, distributed network that needs many shuffled passes over the same experiences to avoid catastrophic forgetting. Replay during sleep interleaves new memories with old ones — and the formal analogy is now tight enough that it's an active research area: complementary learning systems.
+    </p>
+  </aside>
+
+  <p>
+    Sleep matters here for real, mechanistic reasons. During non-REM slow-wave sleep, the hippocampus produces bursts of fast activity called <strong>sharp-wave ripples</strong>, during which it replays sequences from the day, time-compressed maybe 10–20×. Disrupt these ripples experimentally in rats, and they fail to consolidate spatial memories from the previous day. Sleep is when the slow network gets trained.
+  </p>
+</section>
+
+<!-- ============================================== -->
+<section id="systems" class="chapter">
+  <h2><span class="ch-num">09</span> The system view</h2>
+  <p class="sub">A one-screen tour, then stop.</p>
+
+  <p>The brain isn't a uniform sheet of neurons. Major chunks specialize:</p>
+  <ul>
+    <li><span class="term">Cerebral cortex</span> — the wrinkly outer sheet. Roughly six layers, ~2 mm thick. Most "high-level" computation: perception, language, planning, abstract thought. Divided into sensory areas (visual, auditory), motor areas, and association areas (prefrontal, parietal).</li>
+    <li><span class="term">Hippocampus</span> — episodic memory write buffer, also critical for spatial navigation (place cells, grid cells).</li>
+    <li><span class="term">Basal ganglia</span> — action selection and habit learning. Receives the dopamine reward signal.</li>
+    <li><span class="term">Cerebellum</span> — motor control, timing, error correction. Densely packed (it has more neurons than the rest of the brain combined, in tiny granule cells).</li>
+    <li><span class="term">Thalamus</span> — the relay hub. Almost all sensory information passes through it on the way to cortex.</li>
+    <li><span class="term">Amygdala</span> — emotional salience, especially fear. Tags memories as "important," which is why traumatic events are over-consolidated.</li>
+    <li><span class="term">Brainstem &amp; hypothalamus</span> — the boring-but-keeping-you-alive layer: breathing, heart rate, temperature, sleep, hunger.</li>
+  </ul>
+
+  <p>
+    The two things to keep in mind about systems organization:
+  </p>
+  <ol>
+    <li><strong>Specialization is real but soft.</strong> The visual cortex really does do vision — but if you blind a person early enough, that same cortex repurposes for touch and hearing. Function is shaped heavily by inputs.</li>
+    <li><strong>Everything is recurrent.</strong> The connectivity diagram is not "thalamus → cortex → done." Cortex projects back to thalamus more strongly than the other way. Higher areas project back to lower ones. Loops everywhere. The brain is closer to a giant recurrent graph than a feedforward stack.</li>
+  </ol>
+
+  <aside class="callout mint">
+    <span class="tag">Where this leaves us</span>
+    <p>
+      A 30-second summary you can carry around: neurons fire in spikes; synapses convert electrical to chemical and back; synaptic strengths change with use (plasticity); learning is plasticity gated by a few different signals (Hebbian, dopamine-RPE, neuromodulator-controlled attention); short-term memory is sustained activity, declarative long-term memory is consolidated from hippocampus to cortex via replay during sleep, and procedural memory lives in basal ganglia and cerebellum. The rest is — a lot — of detail on top.
+    </p>
+  </aside>
+</section>
+
+<footer class="foot">
+  <span>samikon.dev/brainstuff</span>
+  <span><a href="/">← back to main</a></span>
+</footer>
+
+</div>
+</body>
+</html>
