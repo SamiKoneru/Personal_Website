@@ -41,9 +41,9 @@ export const profile = {
   status: "Open to new opportunities",
 
   about:
-    "EECS at UC Berkeley. Currently leading engineering at DreamIt and " +
-    "researching low-resource language models at TokenWorks — with CUDA kernels " +
-    "and from-scratch paper reimplementations on the side.",
+    "EECS at UC Berkeley. Currently at Piris Labs building ML infrastructure for " +
+    "LLM inference on B200 GPUs. Previously founding engineer at DreamIt and ML at " +
+    "TokenWorks — with CUDA kernels and from-scratch paper reimplementations on the side.",
 
   links: [
     { label: "GitHub", href: "https://github.com/SamiKoneru" },
@@ -77,6 +77,7 @@ export const profile = {
     { name: "C++", icon: "cplusplus/cplusplus-original" },
     { name: "CUDA" },
     { name: "PyTorch", icon: "pytorch/pytorch-original" },
+    { name: "SGLang" },
     { name: "Rust", icon: "rust/rust-original", invertOnDark: true },
     { name: "TypeScript", icon: "typescript/typescript-original" },
     { name: "React", icon: "react/react-original" },
@@ -84,46 +85,60 @@ export const profile = {
     { name: "PostgreSQL", icon: "postgresql/postgresql-original" },
     { name: "LangChain" },
     { name: "Docker", icon: "docker/docker-original" },
+    { name: "Kubernetes", icon: "kubernetes/kubernetes-plain" },
+    { name: "GCP", icon: "googlecloud/googlecloud-original" },
     { name: "AWS" },
   ] satisfies Skill[],
 
   experience: [
     {
+      role: "Machine Learning Engineer Intern",
+      company: "Piris Labs",
+      location: "Remote",
+      period: "June 2026 — Present",
+      bullets: [
+        "Building ML infrastructure to optimize LLM inference on B200 GPUs — automated GCP deployment, SGLang serving, and latency/throughput/cost benchmarking, as groundwork for custom photonics hardware.",
+        "Researching scheduling, batching, and speculative decoding to serve GLM 5.2 at 483 tok/s, 23% over Databricks.",
+      ],
+      tech: ["SGLang", "CUDA", "GCP", "Kubernetes"],
+      color: "linear-gradient(135deg, #6366f1, #06b6d4)",
+    },
+    {
       role: "Founding Software Engineer",
       company: "DreamIt",
       location: "Berkeley, CA",
-      period: "Feb 2026 — Present",
+      period: "Feb 2026 — May 2026",
       bullets: [
-        "Directing a 3-person engineering team to architect and ship end-to-end Rust features for an early-stage no-code gaming app, scaling the platform to support 1,400+ users and public game deployments.",
-        "Architected an async Claude API pipeline for end-to-end game generation from prompts in under 2 minutes.",
+        "Directed a 3-person engineering team shipping end-to-end Rust features for an early-stage no-code gaming app, scaling to 1,400+ users.",
+        "Architected an async Claude API pipeline that generates playable games from natural-language prompts.",
       ],
       tech: ["Rust", "Claude API"],
       color: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
       logo: "/dreamitnow_logo.jpeg",
     },
     {
-      role: "Machine Learning Research Intern",
+      role: "Data Science Intern (Part-time)",
       company: "TokenWorks",
       location: "Remote",
-      period: "Feb 2026 — Present",
+      period: "Feb 2026 — May 2026",
       bullets: [
-        "Fine-tuning open-source models such as the ByT5 transformer to detect and translate low-resource languages in 200,000+ OCR-processed documents using aligned corpora from Wikidata and previous OCR runs.",
-        "Building a containerized Wikibase with Docker to serve a 1,400-item knowledge graph of the Sumerian lexicon.",
+        "Fine-tuned transformers (BART) to lemmatize, tag, and translate low-resource Sumerian across 200,000+ aligned tokens from OCR-processed cuneiform.",
+        "Stored results in a containerized 1,400-item Wikibase knowledge graph of the Sumerian lexicon.",
       ],
-      tech: ["PyTorch", "ByT5", "Docker", "Wikibase"],
+      tech: ["PyTorch", "BART", "Docker", "Wikibase"],
       color: "linear-gradient(135deg, #ec4899, #f59e0b)",
       logo: "/tokenworks.jpeg",
     },
     {
-      role: "Machine Learning Engineer",
-      company: "GetGreen (Contract)",
+      role: "Machine Learning Engineer (Contract)",
+      company: "GetGreen",
       location: "Remote",
       period: "Sept 2025 — Dec 2025",
       bullets: [
-        "Engineered a Retrieval-Augmented Generation chatbot using LangChain for LLM orchestration and ChromaDB for vector storage and semantic search to deliver environmental answers in under 3 seconds.",
-        "Scraped and processed 1,000+ articles with BeautifulSoup, Pandas, and SQL for a model retrieval corpus.",
+        "Engineered a RAG chatbot using LangChain and ChromaDB for semantic search over 1,000+ scraped articles, answering sustainability questions in under 3 seconds.",
+        "Scraped and processed the retrieval corpus with BeautifulSoup, pandas, and SQL.",
       ],
-      tech: ["LangChain", "ChromaDB", "Pandas", "SQL"],
+      tech: ["LangChain", "ChromaDB", "pandas", "SQL"],
       color: "linear-gradient(135deg, #10b981, #06b6d4)",
       logo: "/emeraldtechnologygroup_logo.jpeg",
     },
@@ -143,10 +158,10 @@ export const profile = {
   ] satisfies Job[],
 
   currently: [
-    { label: "Building", value: "End-to-end Rust features at DreamIt" },
+    { label: "Building", value: "LLM inference infra on B200 GPUs at Piris Labs" },
     {
       label: "Researching",
-      value: "Persistent memory in neural world models",
+      value: "In-context memory compression for longer-term retention",
     },
     { label: "Writing", value: "GPU kernels in C++/CUDA on the side" },
   ] satisfies CurrentlyItem[],

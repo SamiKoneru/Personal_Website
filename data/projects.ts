@@ -34,8 +34,9 @@ export const projects: Project[] = [
     name: "CUDA CNN",
     category: "Machine Learning",
     description:
-      "CNN built from scratch in C++/CUDA with hand-written backprop, im2col, and GEMM kernels. 99%+ on MNIST at ~10% the throughput of an equivalent PyTorch/cuDNN model on T4 GPUs.",
+      "CNN built from scratch in C++/CUDA with hand-written backprop, im2col, and GEMM kernels — no deep-learning or matmul libraries. 99%+ on MNIST at ~50% the throughput of an equivalent PyTorch model on T4 GPUs.",
     stack: ["C++", "CUDA"],
+    href: "https://github.com/SamiKoneru/CUDA-CNN",
     featured: true,
   },
   {
@@ -43,8 +44,19 @@ export const projects: Project[] = [
     name: "GPT-2 from scratch",
     category: "Machine Learning",
     description:
-      "124M-parameter decoder-only transformer with causal self-attention and learned positional encodings. Optimized for multi-GPU CUDA with minimized CPU-GPU sync — 11× speedup over the pre-optimized baseline.",
+      "124M-parameter decoder-only transformer with causal self-attention and learned positional encodings, following “Attention Is All You Need.” Optimized CUDA training for an 11× speedup over the unoptimized baseline.",
     stack: ["PyTorch", "CUDA", "Python"],
+    href: "https://github.com/SamiKoneru/My_GPT-2",
+    featured: true,
+  },
+  {
+    slug: "feature-compression",
+    name: "Feature Compression",
+    category: "Machine Learning",
+    description:
+      "Testing in-context memory compression to enable longer-term retention while preserving response quality.",
+    stack: ["Python", "PyTorch"],
+    href: "https://github.com/SamiKoneru/Feature-Compression",
     featured: true,
   },
   {
@@ -54,6 +66,7 @@ export const projects: Project[] = [
     description:
       "Convolutional neural net implemented from scratch in NumPy, including manual conv and pool gradients.",
     stack: ["NumPy", "Python"],
+    href: "https://github.com/SamiKoneru/CNN_Scratch",
   },
   {
     slug: "brain-ager",
@@ -77,6 +90,7 @@ export const projects: Project[] = [
     description:
       "Reinforcement learning agent for Settlers of Catan trained with Proximal Policy Optimization.",
     stack: ["PyTorch", "PPO"],
+    href: "https://github.com/SamiKoneru/Catan_bot",
   },
   {
     slug: "codenames-bot",
@@ -93,14 +107,7 @@ export const projects: Project[] = [
     description:
       "Negamax + alpha-beta chess engine with quiescence search and a Zobrist-keyed transposition table. Tkinter UI.",
     stack: ["Python", "Tkinter"],
-  },
-  {
-    slug: "dreamit",
-    name: "DreamIT Engine",
-    category: "Systems & Engines",
-    description:
-      "Procedural game world generation engine built on Bevy ECS — GameSpec → validation → spawn rules → chunk output.",
-    stack: ["Rust", "Bevy"],
+    href: "https://github.com/SamiKoneru/Chessbot",
   },
   {
     slug: "bs",

@@ -107,7 +107,7 @@ export default function Home() {
             </Link>
           }
         >
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
             {featured.map((p, i) => (
               <Reveal key={p.slug} delay={i * 120}>
                 <ProjectCard project={p} />
