@@ -165,7 +165,7 @@ export const profile = {
     { label: "Building", value: "LLM inference infra on B200 GPUs at Piris Labs" },
     {
       label: "Researching",
-      value: "In-context memory compression for longer-term retention",
+      value: "Learned validity signals for stale context in world models",
     },
     { label: "Writing", value: "GPU kernels in C++/CUDA on the side" },
   ] satisfies CurrentlyItem[],
