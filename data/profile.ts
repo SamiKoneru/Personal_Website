@@ -8,10 +8,12 @@ export type Job = {
   description?: string;
   bullets?: string[];
   tech?: string[];
-  /** CSS background — gradient or solid — for the company logo tile (fallback when no logo image). */
+  /** CSS background (gradient or solid) for the company logo tile, used when no logo image is set. */
   color?: string;
   /** Optional path to a logo image, e.g. "/logos/dreamit.png" in public/. */
   logo?: string;
+  /** Scale up a logo that has empty margin baked into the file. 1 = as-is. */
+  logoScale?: number;
 };
 
 export type Education = {
@@ -43,7 +45,7 @@ export const profile = {
   about:
     "EECS at UC Berkeley. Currently at Piris Labs building ML infrastructure for " +
     "LLM inference on B200 GPUs. Previously founding engineer at DreamIt and ML at " +
-    "TokenWorks — with CUDA kernels and from-scratch paper reimplementations on the side.",
+    "TokenWorks, with CUDA kernels and from-scratch paper reimplementations on the side.",
 
   links: [
     { label: "GitHub", href: "https://github.com/SamiKoneru" },
@@ -97,12 +99,13 @@ export const profile = {
       location: "Remote",
       period: "June 2026 — Present",
       bullets: [
-        "Building ML infrastructure to optimize LLM inference on B200 GPUs — automated GCP deployment, SGLang serving, and latency/throughput/cost benchmarking, as groundwork for custom photonics hardware.",
+        "Building ML infrastructure to optimize LLM inference on B200 GPUs with automated GCP deployment, SGLang serving, and latency/throughput/cost benchmarking, as groundwork for custom photonics hardware.",
         "Researching scheduling, batching, and speculative decoding to serve GLM 5.2 at 483 tok/s, 23% over Databricks.",
       ],
       tech: ["SGLang", "CUDA", "GCP", "Kubernetes"],
       color: "linear-gradient(135deg, #6366f1, #06b6d4)",
       logo: "/pirislabs.png",
+      logoScale: 1.45,
     },
     {
       role: "Founding Software Engineer",
@@ -170,7 +173,7 @@ export const profile = {
   interests: [
     {
       title: "Chess",
-      detail: "Built my own engine — negamax + alpha-beta search.",
+      detail: "Built my own engine using negamax + alpha-beta search.",
     },
     {
       title: "Game engines",

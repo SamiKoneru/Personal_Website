@@ -7,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.tagline}`,
+  title: `${profile.name} | ${profile.tagline}`,
   description: profile.about,
 };
 

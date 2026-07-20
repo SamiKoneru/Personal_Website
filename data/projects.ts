@@ -34,7 +34,7 @@ export const projects: Project[] = [
     name: "CUDA CNN",
     category: "Machine Learning",
     description:
-      "CNN built from scratch in C++/CUDA with hand-written backprop, im2col, and GEMM kernels — no deep-learning or matmul libraries. 99%+ on MNIST at ~50% the throughput of an equivalent PyTorch model on T4 GPUs.",
+      "CNN built from scratch in C++/CUDA with hand-written backprop, im2col, and GEMM kernels. No deep-learning or matmul libraries. 99%+ on MNIST at ~50% the throughput of an equivalent PyTorch model on T4 GPUs.",
     stack: ["C++", "CUDA"],
     href: "https://github.com/SamiKoneru/CUDA-CNN",
     featured: true,
@@ -137,7 +137,7 @@ export const projects: Project[] = [
     name: "Project Planner",
     category: "Web Apps",
     description:
-      "AI project planner on Cloudflare — Durable Objects for state, Workers AI for the LLM, React + WebSocket frontend.",
+      "AI project planner on Cloudflare: Durable Objects for state, Workers AI for the LLM, React + WebSocket frontend.",
     stack: ["Cloudflare", "React", "Vite"],
   },
   {

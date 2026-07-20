@@ -15,7 +15,7 @@ export default function ProjectsPage() {
         </h1>
         <div className="accent-bar" />
         <p className="max-w-2xl text-lg text-[color:var(--muted)] sm:text-xl">
-          A selection of things I&apos;ve built — most live on{" "}
+          A selection of things I&apos;ve built. Most live on{" "}
           <a
             href="https://github.com/SamiKoneru"
             target="_blank"

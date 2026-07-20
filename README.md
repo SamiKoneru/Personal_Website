@@ -13,11 +13,11 @@ Open http://localhost:3000.
 
 ## Editing content
 
-- `data/profile.ts` — name, tagline, about, experience, education, skills, links.
-- `data/projects.ts` — project cards. Set `featured: true` to surface a project on the home page. The `categories` array controls the section order on `/projects`.
-- `app/page.tsx` — home/CV layout.
-- `app/projects/page.tsx` — gallery layout.
-- `app/globals.css` — colors (CSS variables, light + dark via `prefers-color-scheme`).
+- `data/profile.ts`: name, tagline, about, experience, education, skills, links.
+- `data/projects.ts`: project cards. Set `featured: true` to surface a project on the home page. The `categories` array controls the section order on `/projects`.
+- `app/page.tsx`: home/CV layout.
+- `app/projects/page.tsx`: gallery layout.
+- `app/globals.css`: colors (CSS variables, light + dark via `prefers-color-scheme`).
 
 Drop a `public/resume.pdf` to make the Resume link work.
 

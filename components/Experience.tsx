@@ -15,7 +15,7 @@ function CompanyLogo({ job }: { job: Job }) {
   if (job.logo) {
     return (
       <div
-        className="logo-tile flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-2 shadow-lg sm:h-[72px] sm:w-[72px]"
+        className="logo-tile flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-lg sm:h-[72px] sm:w-[72px]"
         aria-hidden
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -23,6 +23,9 @@ function CompanyLogo({ job }: { job: Job }) {
           src={job.logo}
           alt={`${job.company} logo`}
           className="h-full w-full object-contain"
+          style={
+            job.logoScale ? { transform: `scale(${job.logoScale})` } : undefined
+          }
         />
       </div>
     );

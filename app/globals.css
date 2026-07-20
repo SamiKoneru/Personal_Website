@@ -267,6 +267,10 @@ a {
   display: flex;
   gap: 0.75rem;
   overflow: hidden;
+  /* Room for the chip's hover lift; overflow clips at the padding edge.
+     Negative margin cancels it so surrounding layout is unchanged. */
+  padding: 0.5rem 0;
+  margin: -0.5rem 0;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
