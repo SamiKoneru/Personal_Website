@@ -102,6 +102,7 @@ export const profile = {
       ],
       tech: ["SGLang", "CUDA", "GCP", "Kubernetes"],
       color: "linear-gradient(135deg, #6366f1, #06b6d4)",
+      logo: "/pirislabs.png",
     },
     {
       role: "Founding Software Engineer",
