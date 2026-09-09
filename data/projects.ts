@@ -66,6 +66,7 @@ export const projects: Project[] = [
     description:
       "A DeltaNet write gate conditioned on the memory already stored at the target address, read from two scalars the delta rule computes anyway. Cuts loss 5.5% across 3 seeds for zero extra state and +0.9% FLOPs, beating an oracle handed ground-truth labels.",
     stack: ["Python", "PyTorch"],
+    href: "https://github.com/SamiKoneru/wave_ssm",
   },
   {
     slug: "cnn-scratch",
