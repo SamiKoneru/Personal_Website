@@ -60,6 +60,14 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: "gated-delta-ssm",
+    name: "Gated Delta SSM",
+    category: "Machine Learning",
+    description:
+      "A DeltaNet write gate conditioned on the memory already stored at the target address, read from two scalars the delta rule computes anyway. Cuts loss 5.5% across 3 seeds for zero extra state and +0.9% FLOPs, beating an oracle handed ground-truth labels.",
+    stack: ["Python", "PyTorch"],
+  },
+  {
     slug: "cnn-scratch",
     name: "NumPy CNN",
     category: "Machine Learning",
@@ -85,11 +93,11 @@ export const projects: Project[] = [
   },
   {
     slug: "catan-bot",
-    name: "Catan PPO Agent",
+    name: "Catan Bot",
     category: "Reinforcement Learning",
     description:
-      "Reinforcement learning agent for Settlers of Catan trained with Proximal Policy Optimization.",
-    stack: ["PyTorch", "PPO"],
+      "Actor-critic transformer for Settlers of Catan, trained AlphaZero-style by distilling PUCT tree-search visit counts into the policy prior and value net each self-play round. A Playwright client parses live colonist.io WebSocket traffic to play online.",
+    stack: ["PyTorch", "Gymnasium", "Playwright"],
     href: "https://github.com/SamiKoneru/Catan_bot",
   },
   {

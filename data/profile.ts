@@ -43,9 +43,9 @@ export const profile = {
   status: "Open to new opportunities",
 
   about:
-    "EECS at UC Berkeley. Currently at Piris Labs building ML infrastructure for " +
-    "LLM inference on B200 GPUs. Previously founding engineer at DreamIt and ML at " +
-    "TokenWorks, with CUDA kernels and from-scratch paper reimplementations on the side.",
+    "EECS at UC Berkeley. Currently at Intel building deep learning primitives in " +
+    "oneDNN. Previously optimized LLM inference at Piris Labs, with CUDA kernels " +
+    "and from-scratch paper reimplementations on the side.",
 
   links: [
     { label: "GitHub", href: "https://github.com/SamiKoneru" },
@@ -94,13 +94,26 @@ export const profile = {
 
   experience: [
     {
+      role: "AI Software Engineer Intern",
+      company: "Intel",
+      location: "Folsom, CA",
+      period: "Sept 2026 — Present",
+      bullets: [
+        "Developing deep learning primitives in oneDNN, Intel's open-source library behind PyTorch and TensorFlow on Intel hardware, working in C++ on Linux across floating-point arithmetic, numerical accuracy, and library architecture.",
+      ],
+      tech: ["C++", "oneDNN", "Linux"],
+      color: "linear-gradient(135deg, #0071c5, #00c7fd)",
+      logo: "/intel.png",
+    },
+    {
       role: "Machine Learning Engineer Intern",
       company: "Piris Labs",
       location: "Remote",
-      period: "June 2026 — Present",
+      period: "June 2026 — Aug 2026",
       bullets: [
-        "Building ML infrastructure to optimize LLM inference on B200 GPUs with automated GCP deployment, SGLang serving, and latency/throughput/cost benchmarking, as groundwork for custom photonics hardware.",
-        "Researching scheduling, batching, and speculative decoding to serve GLM 5.2 at 483 tok/s, 23% over Databricks.",
+        "Built ML infrastructure to optimize LLM inference on B200 GPUs, spanning automated GCP deployment, SGLang serving, prefix caching, multi-tenancy, and per-instance routing, as groundwork for custom photonics hardware.",
+        "Researched and implemented scheduling and batching policies that cut median end-to-end latency by over 50%.",
+        "Benchmarked speculative decoding, batching, scheduling, and routing on unified and disaggregated systems, reaching 483 tok/s on GLM 5.2, 23% more than Databricks.",
       ],
       tech: ["SGLang", "CUDA", "GCP", "Kubernetes"],
       color: "linear-gradient(135deg, #6366f1, #06b6d4)",
@@ -121,13 +134,13 @@ export const profile = {
       logo: "/dreamitnow_logo.jpeg",
     },
     {
-      role: "Data Science Intern (Part-time)",
+      role: "Data Science Intern",
       company: "TokenWorks",
       location: "Remote",
       period: "Feb 2026 — May 2026",
       bullets: [
-        "Fine-tuned transformers (BART) to lemmatize, tag, and translate low-resource Sumerian across 200,000+ aligned tokens from OCR-processed cuneiform.",
-        "Stored results in a containerized 1,400-item Wikibase knowledge graph of the Sumerian lexicon.",
+        "Fine-tuned BART-base as a sequence-to-sequence tagger for low-resource Sumerian, jointly predicting part of speech, lemma, and English gloss from 217K CoNLL-U tokens of transliterated cuneiform in a single decoding pass.",
+        "Built a self-hosted Wikibase lexical knowledge graph with idempotent Python importers mirroring Wikidata's Sumerian lexeme schema through a resumable, checkpointed pipeline.",
       ],
       tech: ["PyTorch", "BART", "Docker", "Wikibase"],
       color: "linear-gradient(135deg, #ec4899, #f59e0b)",
@@ -162,7 +175,7 @@ export const profile = {
   ] satisfies Job[],
 
   currently: [
-    { label: "Building", value: "LLM inference infra on B200 GPUs at Piris Labs" },
+    { label: "Building", value: "Deep learning primitives in oneDNN at Intel" },
     {
       label: "Researching",
       value: "Learned validity signals for stale context in world models",
