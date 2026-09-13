@@ -1,0 +1,354 @@
+/* Styles scoped to the long-form notes route. Imported only by this page,
+   so nothing here touches the home page or the projects gallery. */
+
+.note-page {
+  --note-measure: 74ch;
+  --def: var(--accent);
+  --ex: #10b981;
+  --prop: #8b5cf6;
+  --warn: #f59e0b;
+}
+@media (prefers-color-scheme: dark) {
+  .note-page {
+    --ex: #34d399;
+    --prop: #a78bfa;
+    --warn: #fbbf24;
+  }
+}
+
+/* ===== Prose rhythm ===== */
+.note-prose {
+  max-width: var(--note-measure);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.note-prose p {
+  margin: 1.05em 0;
+}
+.note-prose ul,
+.note-prose ol {
+  margin: 1.05em 0;
+  padding-left: 1.35rem;
+}
+.note-prose ul {
+  list-style: none;
+  padding-left: 1.1rem;
+}
+.note-prose ul > li {
+  position: relative;
+  padding-left: 0.35rem;
+}
+.note-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.note-prose ol {
+  list-style: decimal;
+}
+.note-prose li {
+  margin: 0.42em 0;
+}
+.note-prose strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+.note-prose a {
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: border-color 180ms ease;
+}
+.note-prose a:hover {
+  border-bottom-color: var(--accent);
+}
+.note-prose code {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 0.88em;
+  padding: 0.12em 0.36em;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--foreground) 7%, transparent);
+  border: 1px solid var(--border);
+}
+
+/* ===== Section headings ===== */
+.note-h2 {
+  scroll-margin-top: 6rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  margin: 4.5rem 0 1.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.note-h2 .num {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--accent-soft);
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.45rem;
+  transform: translateY(-0.15em);
+}
+.note-h3 {
+  scroll-margin-top: 6rem;
+  margin: 2.6rem 0 0.85rem;
+  font-size: 1.16rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.note-h3 .num {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  margin-right: 0.55rem;
+  font-weight: 500;
+}
+
+/* ===== Math ===== */
+.eq {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 0.25rem 0;
+}
+.eq-body {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0.1rem;
+}
+.eq-body::-webkit-scrollbar {
+  height: 6px;
+}
+.eq-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.eq-tagged .eq-body {
+  padding-right: 3.4rem;
+}
+.eq-tag {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.katex {
+  font-size: 1.04em;
+}
+.katex-display {
+  margin: 0;
+}
+
+/* ===== Callout blocks ===== */
+.block {
+  --bc: var(--accent);
+  position: relative;
+  margin: 1.9rem 0;
+  padding: 1.1rem 1.25rem 1.15rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--bc);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--bc) 4.5%, transparent);
+}
+.block > .block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--bc);
+}
+.block > .block-label .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bc);
+}
+.block > .block-label .title {
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.78rem;
+}
+.block p:first-of-type {
+  margin-top: 0;
+}
+.block p:last-child {
+  margin-bottom: 0;
+}
+.block-def {
+  --bc: var(--def);
+}
+.block-ex {
+  --bc: var(--ex);
+}
+.block-prop {
+  --bc: var(--prop);
+}
+.block-note {
+  --bc: var(--warn);
+}
+
+/* ===== Tables ===== */
+.note-table-wrap {
+  margin: 1.9rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+}
+.note-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.note-table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.7rem 0.95rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
+}
+.note-table td {
+  padding: 0.62rem 0.95rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  vertical-align: middle;
+}
+.note-table tr:last-child td {
+  border-bottom: 0;
+}
+.note-table tbody tr {
+  transition: background-color 150ms ease;
+}
+.note-table tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.note-table .rowname {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* ===== Table of contents ===== */
+.toc {
+  font-size: 0.845rem;
+  line-height: 1.45;
+}
+.toc a {
+  display: block;
+  padding: 0.28rem 0 0.28rem 0.75rem;
+  border-left: 1px solid var(--border);
+  color: var(--muted);
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+}
+.toc a:hover {
+  color: var(--foreground);
+  border-left-color: var(--accent);
+}
+.toc a .n {
+  display: inline-block;
+  width: 1.55rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+
+/* ===== Misc ===== */
+.kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.45rem 1.1rem;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  align-items: baseline;
+}
+.kv dt {
+  text-align: right;
+  color: var(--foreground);
+}
+.kv dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.76rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.rule {
+  margin: 3.5rem 0;
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    to right,
+    var(--border),
+    color-mix(in srgb, var(--accent) 35%, transparent),
+    transparent
+  );
+}
+
+@media (max-width: 640px) {
+  .eq-tagged .eq-body {
+    padding-right: 2.6rem;
+  }
+  .eq-tag {
+    font-size: 0.72rem;
+  }
+  .note-h2 {
+    font-size: 1.42rem;
+    margin-top: 3.4rem;
+  }
+  .note-prose {
+    font-size: 1rem;
+  }
+  .kv {
+    grid-template-columns: 1fr;
+    gap: 0.1rem 0;
+  }
+  .kv dt {
+    text-align: left;
+    margin-top: 0.7rem;
+  }
+}
+
+.refs {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.refs li {
+  margin: 0.55rem 0;
+}

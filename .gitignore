@@ -1,8 +1,28 @@
+# dependencies
 node_modules
+
+# next.js
 .next
 out
-.env*.local
-.vercel
-*.tsbuildinfo
 next-env.d.ts
+*.tsbuildinfo
+
+# env files (may contain secrets)
+.env*
+
+# vercel
+.vercel
+
+# local tooling / editors
+.claude/
+.vscode/
+.idea/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# os
 .DS_Store
