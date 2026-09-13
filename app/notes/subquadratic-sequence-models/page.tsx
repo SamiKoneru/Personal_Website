@@ -517,6 +517,36 @@ y_5 &= h_2u_3 = 3\cdot 4 &&= 12
             </p>
           </Block>
 
+          <p>
+            It pays to build the transform up from its smallest cases, because
+            the fast algorithm in section 3.5 is nothing but these smallest
+            cases stitched together.
+          </p>
+
+          <Block kind="ex" title="N = 1 and N = 2, the atoms">
+            <p>
+              At <M>{tex`N=1`}</M> there is a single root of unity,{" "}
+              <M>{tex`\omega_1=1`}</M>, and <M>{tex`\mathsf{W}=[1]`}</M>: the DFT
+              of one number is that number. Nothing moves. This is the base case
+              every recursion below bottoms out at.
+            </p>
+            <p>
+              At <M>{tex`N=2`}</M>, <M>{tex`\omega_2=e^{-\pi i}=-1`}</M>, so
+            </p>
+            <Eq>{tex`\mathsf{W}_2=\begin{bmatrix}1&1\\ 1&-1\end{bmatrix},\qquad
+\widehat{(x_0,x_1)}=(\,x_0+x_1,\;\;x_0-x_1\,).`}</Eq>
+            <p>
+              The 2-point DFT is <em>one sum and one difference</em>, nothing
+              more. <M>{tex`\hat x_0=x_0+x_1`}</M> is the mean up to scale (the DC
+              or <M>{tex`\omega=0`}</M> mode) and{" "}
+              <M>{tex`\hat x_1=x_0-x_1`}</M> is the fastest oscillation the
+              2-point grid can carry. Concretely{" "}
+              <M>{tex`\widehat{(3,5)}=(8,\,-2)`}</M>. This sum/difference pair is
+              the single primitive, the <strong>butterfly</strong>, that every
+              larger FFT is assembled from.
+            </p>
+          </Block>
+
           <Block kind="ex" title="The DFT matrix at N = 4">
             <p>
               <M>{tex`\omega_4=e^{-2\pi i/4}=-i`}</M>, so{" "}
@@ -535,6 +565,17 @@ u=\begin{bmatrix}1\\0\\-1\\4\end{bmatrix}\;\Longrightarrow\;
               about half of complex ones.
             </p>
           </Block>
+
+          <p>
+            The 4-point transform is really two 2-point transforms in disguise.
+            Split <M>{tex`u=(1,0,-1,4)`}</M> into its even-indexed entries{" "}
+            <M>{tex`(1,-1)`}</M> and odd-indexed entries <M>{tex`(0,4)`}</M>,
+            transform each half with the sum/difference rule above, and recombine
+            with a single twiddle factor. Section 3.5 makes this precise and
+            turns it into the fast algorithm; the trace there rebuilds exactly the{" "}
+            <M>{tex`\hat u=(4,\,2+4i,\,-4,\,2-4i)`}</M> we just got by brute
+            force, at a fraction of the multiplies.
+          </p>
 
           <H3 n="3.2" id="circulant">
             Circular convolution and circulant matrices
@@ -617,6 +658,31 @@ u=\begin{bmatrix}1\\0\\-1\\4\end{bmatrix}\;\Longrightarrow\;
             : <M>{tex`\mathrm{DFT}(x\odot u)=\tfrac1N\,\hat x\circledast_N\hat u`}</M>.
           </p>
 
+          <Block kind="ex" title="The convolution theorem, checked on numbers">
+            <p>
+              Take <M>{tex`h=(1,2,3)`}</M> zero-padded to{" "}
+              <M>{tex`(1,2,3,0)`}</M> and <M>{tex`u=(1,0,-1,4)`}</M> at{" "}
+              <M>{tex`N=4`}</M>. From section 3.1,{" "}
+              <M>{tex`\hat u=(4,\,2+4i,\,-4,\,2-4i)`}</M>; the same matrix gives
+            </p>
+            <Eq>{tex`\hat h=\mathsf{W}\,(1,2,3,0)^{\top}=(6,\;-2-2i,\;2,\;-2+2i).`}</Eq>
+            <p>
+              Multiply the two spectra pointwise, then invert with{" "}
+              <M>{tex`\mathsf{W}^{-1}`}</M>:
+            </p>
+            <Eq>{tex`\hat h\odot\hat u=(24,\;\,4-12i,\;\,-8,\;\,4+12i)
+\;\;\xrightarrow{\ \mathrm{iDFT}\ }\;\;
+(6,\,14,\,2,\,2).`}</Eq>
+            <p>
+              Three length-4 DFTs and four multiplies reproduce the circular
+              convolution <M>{tex`h\circledast_4 u`}</M> exactly. Section 3.4
+              shows that this <M>{tex`(6,14,2,2)`}</M> is the wrapped version of
+              the linear result <M>{tex`(1,2,2,2,5,12)`}</M> from section 2.1, and
+              how one padding step separates the two. The frequency domain never
+              lies; it just convolves circularly.
+            </p>
+          </Block>
+
           <H3 n="3.4" id="padding">
             Getting a <em>linear</em> convolution out of a circular one
           </H3>
@@ -692,6 +758,62 @@ u=\begin{bmatrix}1\\0\\-1\\4\end{bmatrix}\;\Longrightarrow\;
             <M>{tex`N=2^{16}`}</M> that is{" "}
             <M>{tex`4.29\times10^9`}</M> versus{" "}
             <M>{tex`5.24\times10^5`}</M>, a factor of 8192.
+          </p>
+
+          <Block kind="ex" title="One radix-2 FFT, traced end to end">
+            <p>
+              Run (3.4) by hand on the same{" "}
+              <M>{tex`u=(1,0,-1,4)`}</M> at <M>{tex`N=4`}</M>. Split the input by
+              the parity of its index:
+            </p>
+            <Eq>{tex`\text{even }(u_0,u_2)=(1,-1),\qquad \text{odd }(u_1,u_3)=(0,4).`}</Eq>
+            <p>
+              Transform each half with the 2-point sum/difference rule from
+              section 3.1, which costs only additions:
+            </p>
+            <Eq>{tex`E=\widehat{(1,-1)}=(0,\;2),\qquad O=\widehat{(0,4)}=(4,\;-4).`}</Eq>
+            <p>
+              The twiddle factors are <M>{tex`\omega_4^{0}=1`}</M> and{" "}
+              <M>{tex`\omega_4^{1}=-i`}</M>. Recombine the halves with (3.4),{" "}
+              <M>{tex`\hat u_k=E_k+\omega_4^{k}O_k`}</M> and{" "}
+              <M>{tex`\hat u_{k+2}=E_k-\omega_4^{k}O_k`}</M> for{" "}
+              <M>{tex`k=0,1`}</M>:
+            </p>
+            <Eq>{tex`\begin{aligned}
+\hat u_0 &= E_0+\omega_4^{0}O_0 = 0+1\cdot 4 &&= 4\\
+\hat u_1 &= E_1+\omega_4^{1}O_1 = 2+(-i)(-4) &&= 2+4i\\
+\hat u_2 &= E_0-\omega_4^{0}O_0 = 0-4 &&= -4\\
+\hat u_3 &= E_1-\omega_4^{1}O_1 = 2-(-i)(-4) &&= 2-4i
+\end{aligned}`}</Eq>
+            <p>
+              which is exactly the{" "}
+              <M>{tex`\hat u=(4,\,2+4i,\,-4,\,2-4i)`}</M> that the dense{" "}
+              <M>{tex`4\times4`}</M> matrix produced in section 3.1. The
+              difference is only arithmetic: the direct product needs{" "}
+              <M>{tex`N^2=16`}</M> complex multiplies, this trace needs{" "}
+              <M>{tex`\tfrac N2\log_2 N=4`}</M>, and most of those are by{" "}
+              <M>{tex`1`}</M> or <M>{tex`-i`}</M> and not real multiplies at all.
+              At <M>{tex`N=4`}</M> the saving is trivial; it is the{" "}
+              <em>recursion</em> that makes it enormous.
+            </p>
+          </Block>
+
+          <p>
+            Scaling up is just doing this at every level. An 8-point FFT is two
+            4-point FFTs (each traced exactly as above) plus <M>{tex`4`}</M>{" "}
+            butterflies; a 16-point FFT is two 8-point FFTs plus <M>{tex`8`}</M>{" "}
+            butterflies; and so on. The transform sizes halve until they reach 1:
+          </p>
+
+          <Eq>{tex`8\;\longrightarrow\;\underbrace{4,\;4}_{\text{2 halves}}\;\longrightarrow\;\underbrace{2,2,\;2,2}_{\text{4}}\;\longrightarrow\;\underbrace{1,1,1,1,\;1,1,1,1}_{\text{8 atoms}} .`}</Eq>
+
+          <p>
+            That tree has <M>{tex`\log_2 N`}</M> levels, and each level does{" "}
+            <M>{tex`\Theta(N)`}</M> work across its <M>{tex`N/2`}</M> butterflies.
+            Multiplying gives the same <M>{tex`\Theta(N\log N)`}</M> as the master
+            theorem, now read off the tree the recurrence unrolls into rather than
+            the recurrence itself. Every butterfly on a level is independent, so
+            the depth is just the number of levels, <M>{tex`\Theta(\log N)`}</M>.
           </p>
 
           <H3 n="3.6" id="fftconv">
